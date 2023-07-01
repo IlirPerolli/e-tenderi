@@ -12,7 +12,14 @@ class PostsCreateController extends APIController
 {
     public function __invoke(CreatePostRequest $request): JsonResponse
     {
-        $post = Post::query()->create($request->validated());
-        return $this->respondWithSuccess(PostResource::make($post));
+        $existingPost = Post::where('name', $request->name)->exists();
+
+        if ($existingPost) {
+            return $this->respondWithError('Post already exists');
+        }
+
+        $post = Post::create($request->validated());
+
+        return $this->respondWithSuccess(new PostResource($post), __('app.success'), 201);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Livewire\Posts\Index as PostsIndex;
+use App\Http\Controllers\Livewire\Tenders\Index as TendersIndex;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/posts', PostsIndex::class)->name('posts.index');
+    Route::get('/tenders', TendersIndex::class)->name('tenders.index');
 
 });
 

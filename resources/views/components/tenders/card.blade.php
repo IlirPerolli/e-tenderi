@@ -1,19 +1,19 @@
-@props(['post'])
+@props(['item'])
 <div class="max-w-sm rounded overflow-hidden shadow-lg relative h-auto">
-    <a href="{{$post->url}}" target="_blank">
+    <a href="{{$item->url}}" target="_blank">
         <div class="h-40 flex items-center overflow-hidden">
             <img class="w-full object-cover"
                  onerror="this.src = '{{ default_404_image() }}'"
-                 src="{{$post->image_path}}" alt="Thumbnail">
+                 src="{{$item->image_path}}" alt="Thumbnail">
         </div>
     </a>
     <div class="px-6 py-4 mb-12">
-        <a href="{{$post->url}}" target="_blank">
-            <div class="font-bold text-xl mb-2  break-words">{{Str::limit($post->name, 100)}}</div>
+        <a href="{{$item->url}}" target="_blank">
+            <div class="font-bold text-md mb-2 break-words" title="{{$item->name}}">{{Str::limit($item->name, 50)}}</div>
         </a>
-        <a href="{{$post->url}}" target="_blank">
-            <p class="text-gray-700 text-base">
-                {{$post->description}}
+        <a href="{{$item->url}}" target="_blank">
+            <p class="text-gray-700 text-base" title="{{$item->description}}">
+                {{$item->description}}
             </p>
         </a>
     </div>

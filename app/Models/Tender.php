@@ -7,7 +7,7 @@ use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Tender extends Model
 {
     use HasFactory, Sluggable, Filterable;
 

@@ -31,7 +31,7 @@
             @endif
 
             <!-- Page Content -->
-            <main class="flex-1 relative overflow-y-auto focus:outline-none dark:bg-quaternary-200 transition duration-200">
+            <main class="flex-1 relative overflow-y-auto focus:outline-none dark:bg-secondary-900 transition duration-200">
                 <div>
                     <div class="max-w-8xl mx-auto px-3 sm:px-8 md:px-12">
                         <div class="py-4">

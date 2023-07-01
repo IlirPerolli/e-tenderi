@@ -86,3 +86,10 @@ function validation_attributes(): array
 
     return array_merge($validationAttributes, ['form' => $validationAttributes]);
 }
+
+if (!function_exists('default_404_image')) {
+    function default_404_image()
+    {
+        return asset('/images/default-img.png');
+    }
+}

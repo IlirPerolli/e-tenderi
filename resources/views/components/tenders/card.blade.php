@@ -1,5 +1,5 @@
 @props(['item'])
-<div class="max-w-sm rounded overflow-hidden shadow-lg relative h-auto dark:bg-gray-800">
+<div class="rounded overflow-hidden shadow-lg relative h-auto dark:bg-gray-800">
     <a href="{{$item->url}}" target="_blank">
         <div class="h-64 flex items-center overflow-hidden">
             <img class="w-full object-cover max-h-full"

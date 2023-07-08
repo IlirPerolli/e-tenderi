@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\V1\Auth\LoginController;
 use App\Http\Controllers\API\V1\Auth\RegisterController;
 use App\Http\Controllers\API\V1\Tenders\TendersCreateController;
+use App\Http\Controllers\API\V1\Tenders\TendersShowController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/tenders', TendersCreateController::class);
+Route::get('/tenders/{tender}', TendersShowController::class);
 

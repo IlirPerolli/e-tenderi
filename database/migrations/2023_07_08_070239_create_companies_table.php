@@ -11,17 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenders', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->nullable();
-            $table->text('name');
+            $table->string('name');
             $table->text('slug');
-            $table->text('description')->nullable();
+            $table->string('description')->nullable();
             $table->string('image_path')->nullable();
-            $table->date('deadline')->nullable();
-            $table->string('url');
-            $table->float('price')->nullable();
-            $table->json('props')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenders');
+        Schema::dropIfExists('companies');
     }
 };

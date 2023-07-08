@@ -18,7 +18,7 @@ function notify_success($text, $source = null): void
     session()->flash('success', __($text));
 
     if ($source) {
-        $source->emit('notify_success', $text);
+        $source->emit('notifySuccess', $text);
     }
 }
 
@@ -27,16 +27,7 @@ function notify_error($text, $source = null): void
     session()->flash('error', __($text));
 
     if ($source) {
-        $source->emit('notify_error', $text);
-    }
-}
-
-function get_setting($name)
-{
-    if ($setting = \App\Models\Settings::query()->first()) {
-        return $setting->value($name);
-    } else {
-        return null;
+        $source->emit('notifyError', $text);
     }
 }
 
@@ -60,21 +51,21 @@ function web_route(...$path): string
     return $publicDomain.$path;
 }
 
-function resource_url($url, $temporary = false): ?string
+function resourceUrl($path, $temporary = false): ?string
 {
-    if (blank($url)) {
+    if (blank($path)) {
         return null;
     }
 
-    if ($url instanceof \Livewire\TemporaryUploadedFile) {
-        return $url->temporaryUrl();
+    if ($path instanceof \Livewire\TemporaryUploadedFile) {
+        return $path->temporaryUrl();
     }
 
-    if (filter_var($url, FILTER_VALIDATE_URL)) {
-        return $url;
+    if (filter_var($path, FILTER_VALIDATE_URL)) {
+        return $path;
     }
 
-    return \Illuminate\Support\Facades\Storage::url($url);
+    return \Illuminate\Support\Facades\Storage::url($path);
 }
 
 function validation_attributes(): array

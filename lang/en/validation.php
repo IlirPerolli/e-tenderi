@@ -180,6 +180,5 @@ return [
     |
     */
 
-    'attributes' => [],
-
+    'attributes' => validation_attributes(),
 ];

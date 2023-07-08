@@ -1,5 +1,6 @@
 <?php
-
 return [
-    'form.first_name' => 'first name',
+    'form.name' => 'name',
+    'form.description' => 'description',
+    'form.image_path' => 'resource',
 ];

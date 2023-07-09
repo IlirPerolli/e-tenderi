@@ -16,7 +16,7 @@
     </div>
     <div class="">
         <a href="#">
-            <x:primary-button>Add tender</x:primary-button>
+            <x:primary-button>Add job</x:primary-button>
         </a>
     </div>
 

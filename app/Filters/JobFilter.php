@@ -2,7 +2,7 @@
 
 namespace App\Filters;
 
-class TenderFilter extends Filter
+class JobFilter extends Filter
 {
     public function query($value)
     {

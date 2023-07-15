@@ -26,7 +26,7 @@
                             Description
                         </span>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                <x:form.input class="w-full" id="form.description" name="form.description"
+                                <x:form.text-area class="w-full" id="form.description" name="form.description"
                                               wire:model.defer="form.description" placeholder="Description..."/>
                             </div>
                         </div>

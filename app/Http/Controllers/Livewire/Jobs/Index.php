@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Livewire\Tenders;
+namespace App\Http\Controllers\Livewire\Jobs;
 
-use App\Filters\TenderFilter;
+use App\Filters\JobFilter;
 use App\Models\City;
 use App\Models\Company;
-use App\Models\Tender;
+use App\Models\Job;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Index extends Component
 {
     use WithPagination;
+
     public ?string $query = '';
     public ?string $company = null;
     public ?string $city = null;
@@ -31,17 +33,17 @@ class Index extends Component
 
     public function render()
     {
-        $tenders = Tender::query()->filter(new TenderFilter($this))->with('company')->paginate(12);
+        $jobs = Job::query()->filter(new JobFilter($this))->with('company')->whereDate('deadline', '>', Carbon::now())->latest()->paginate(24);
         $companies = Company::query()->get();
         $cities = City::query()->get();
 
-        return view('tenders.index', compact('tenders', 'companies', 'cities'));
+        return view('jobs.index', compact('jobs', 'companies', 'cities'));
     }
 
-    public function deleteItem(Tender $tender)
+    public function deleteItem(Job $job): void
     {
-        $tender->delete();
+        $job->delete();
 
-        notify_success("The tender has been deleted.", $this);
+        notify_success("The job has been deleted.", $this);
     }
 }

@@ -7,14 +7,11 @@ use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Tender extends Model
+class City extends Model
 {
     use HasFactory, Sluggable, Filterable;
-
-    protected $casts = [
-        'props' => 'json',
-    ];
 
     protected $guarded = [];
 
@@ -25,13 +22,8 @@ class Tender extends Model
         return 'slug';
     }
 
-    public function company(): BelongsTo
+    public function country(): BelongsTo
     {
-        return $this->belongsTo(Company::class);
-    }
-
-    public function city(): BelongsTo
-    {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(Country::class);
     }
 }

@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenders', function (Blueprint $table) {
+        Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->nullable();
+            $table->foreignId('company_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('country_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('city_id')->nullable()->constrained()->nullOnDelete();
             $table->text('name');
             $table->text('slug');
             $table->text('description')->nullable();
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenders');
+        Schema::dropIfExists('jobs');
     }
 };

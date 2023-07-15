@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API\V1\Tenders;
+namespace App\Http\Requests\API\V1\Jobs;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateTenderRequest extends FormRequest
+class CreateJobRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -21,7 +21,9 @@ class CreateTenderRequest extends FormRequest
             'url' => ['required', 'url', 'min:2', 'max:1000'],
             'price' => ['nullable', 'float', 'min:2', 'max:255'],
             'props' => ['nullable'],
-            'company' => ['nullable']
+            'company' => ['nullable'],
+            'country' => ['required'],
+            'city' => ['nullable']
         ];
     }
 }

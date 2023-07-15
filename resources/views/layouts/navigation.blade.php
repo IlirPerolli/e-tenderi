@@ -24,6 +24,12 @@
                     <x-nav-link :href="route('admin.companies.index')" :active="request()->routeIs('admin.companies.*')">
                         {{ __('Companies') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.countries.index')" :active="request()->routeIs('admin.countries.*')">
+                        {{ __('Countries') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.cities.index')" :active="request()->routeIs('admin.cities.*')">
+                        {{ __('Cities') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -87,6 +93,12 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.companies.index')" :active="request()->routeIs('admin.companies.*')">
                 {{ __('Companies') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.countries.index')" :active="request()->routeIs('admin.countries.*')">
+                {{ __('Countries') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.cities.index')" :active="request()->routeIs('admin.cities.*')">
+                {{ __('Cities') }}
             </x-responsive-nav-link>
         </div>
 

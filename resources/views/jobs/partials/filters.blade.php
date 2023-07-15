@@ -7,10 +7,18 @@
         <x-form.input class="pl-10 w-full" wire:model.debounce.750="query" placeholder="Search..."/>
     </div>
     <div class="relative w-full sm:w-72">
-        <x:form.select id="parent_id" placeholder="Select Companies" wire:model.debounce.750="company">
-            <option value=""> Select Companies </option>
+        <x:form.select id="company" placeholder="Select Companies" wire:model.debounce.750="company">
+            <option value=""> Select Provider </option>
         @foreach($companies as $company)
                 <option value="{{ $company->slug ?? ''}}">{{ $company->name ?? '' }} </option>
+            @endforeach
+        </x:form.select>
+    </div>
+    <div class="relative w-full sm:w-72">
+        <x:form.select id="city" placeholder="Select Cities" wire:model.debounce.750="city">
+            <option value=""> Select City </option>
+            @foreach($cities as $city)
+                <option value="{{ $city->slug ?? ''}}">{{ $city->name ?? '' }} </option>
             @endforeach
         </x:form.select>
     </div>

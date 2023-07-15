@@ -29,4 +29,9 @@ class Tender extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
+    }
 }

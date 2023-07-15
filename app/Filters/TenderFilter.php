@@ -18,4 +18,11 @@ class TenderFilter extends Filter
            $query->where('slug', $value);
         });
     }
+
+    public function city($value)
+    {
+        $this->builder->whereHas('city', function ($query) use ($value){
+            $query->where('slug', $value);
+        });
+    }
 }

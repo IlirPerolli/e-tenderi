@@ -10,7 +10,7 @@ class Create extends Component
 {
     use WithFileUploads;
 
-    public $form = [];
+    public array $form = [];
 
     public function render()
     {

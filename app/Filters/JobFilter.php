@@ -25,4 +25,11 @@ class JobFilter extends Filter
             $query->where('slug', $value);
         });
     }
+
+    public function category($value)
+    {
+        $this->builder->whereHas('category', function ($query) use ($value){
+            $query->where('slug', $value);
+        });
+    }
 }

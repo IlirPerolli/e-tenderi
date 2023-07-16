@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Jobs;
 use App\Http\Controllers\API\APIController;
 use App\Http\Requests\API\V1\Jobs\CreateJobRequest;
 use App\Http\Resources\API\V1\JobResource;
+use App\Models\Category;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Country;
@@ -28,6 +29,8 @@ class JobsCreateController extends APIController
 
         $city = $this->findOrCreateCity($data['city'] ?? null, $data['country']);
 
+        $category = $this->findOrCreateCategory($data['category'] ?? null);
+
         $data['company_id'] = $company?->id;
         $data['country_id'] = $country?->id;
         $data['city_id'] = $city->id ?? null;
@@ -35,8 +38,13 @@ class JobsCreateController extends APIController
         unset($data['company']);
         unset($data['country']);
         unset($data['city']);
+        unset($data['category']);
 
         $job = Job::create($data);
+
+        if ($category){
+            $job->category()->attach($category);
+        }
 
         return $this->respondWithSuccess(new JobResource($job), __('app.success'), 201);
     }
@@ -76,5 +84,22 @@ class JobsCreateController extends APIController
         }
 
         return $city;
+    }
+
+    private function findOrCreateCategory(?string $categoryName)
+    {
+        if (!$categoryName){
+            return null;
+        }
+
+        $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->exists();
+
+        if (!$category) {
+            $category = Category::create([
+                'name' => $categoryName,
+            ]);
+        }
+
+        return $category;
     }
 }

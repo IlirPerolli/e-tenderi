@@ -23,7 +23,8 @@ class CreateJobRequest extends FormRequest
             'props' => ['nullable'],
             'company' => ['nullable'],
             'country' => ['required'],
-            'city' => ['nullable']
+            'city' => ['nullable'],
+            'category' => ['nullable']
         ];
     }
 }

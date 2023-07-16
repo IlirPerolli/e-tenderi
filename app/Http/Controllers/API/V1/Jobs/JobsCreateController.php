@@ -7,9 +7,9 @@ use App\Http\Requests\API\V1\Jobs\CreateJobRequest;
 use App\Http\Resources\API\V1\JobResource;
 use App\Models\Category;
 use App\Models\City;
-use App\Models\Company;
 use App\Models\Country;
 use App\Models\Job;
+use App\Models\Provider;
 use Illuminate\Http\JsonResponse;
 
 class JobsCreateController extends APIController
@@ -23,7 +23,7 @@ class JobsCreateController extends APIController
             return $this->respondWithError('Job already exists');
         }
 
-        $company = $this->findCompanyByName($data['company'] ?? null);
+        $provider = $this->findProviderByName($data['provider'] ?? null);
 
         $country = $this->findCountryByName($data['country'] ?? null);
 
@@ -31,11 +31,11 @@ class JobsCreateController extends APIController
 
         $category = $this->findOrCreateCategory($data['category'] ?? null);
 
-        $data['company_id'] = $company?->id;
+        $data['provider_id'] = $provider?->id;
         $data['country_id'] = $country?->id;
         $data['city_id'] = $city->id ?? null;
 
-        unset($data['company']);
+        unset($data['provider']);
         unset($data['country']);
         unset($data['city']);
         unset($data['category']);
@@ -49,13 +49,13 @@ class JobsCreateController extends APIController
         return $this->respondWithSuccess(new JobResource($job), __('app.success'), 201);
     }
 
-    private function findCompanyByName(?string $companyName): ?Company
+    private function findProviderByName(?string $providerName): ?Provider
     {
-        if (!$companyName) {
+        if (!$providerName) {
             return null;
         }
 
-        return Company::where('name', 'LIKE', '%' . $companyName . '%')->first();
+        return Provider::where('name', 'LIKE', '%' . $providerName . '%')->first();
     }
 
     private function findCountryByName(?string $countryName): ?Country
@@ -92,7 +92,7 @@ class JobsCreateController extends APIController
             return null;
         }
 
-        $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->exists();
+        $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->first();
 
         if (!$category) {
             $category = Category::create([

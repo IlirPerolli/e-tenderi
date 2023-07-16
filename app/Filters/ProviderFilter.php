@@ -2,7 +2,7 @@
 
 namespace App\Filters;
 
-class CompanyFilter extends Filter
+class ProviderFilter extends Filter
 {
     public function query($value)
     {

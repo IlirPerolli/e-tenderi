@@ -21,7 +21,7 @@ class CreateTenderRequest extends FormRequest
             'url' => ['required', 'url', 'min:2', 'max:1000'],
             'price' => ['nullable', 'float', 'min:2', 'max:255'],
             'props' => ['nullable'],
-            'company' => ['nullable']
+            'provider' => ['nullable']
         ];
     }
 }

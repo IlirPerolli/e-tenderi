@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Livewire\Admin\Companies;
+namespace App\Http\Controllers\Livewire\Admin\Providers;
 
-use App\Models\Company;
+use App\Models\Provider;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -14,7 +14,7 @@ class Create extends Component
 
     public function render()
     {
-        return view('admin.companies.form');
+        return view('admin.providers.form');
     }
 
     public function rules()
@@ -36,10 +36,10 @@ class Create extends Component
 
         $data['form']['image_path'] = $path;
 
-        Company::query()->create($data['form']);
+        Provider::query()->create($data['form']);
 
-        notify_success("Company created successfully!");
+        notify_success("Provider created successfully!");
 
-        return redirect()->to(route('admin.companies.index'));
+        return redirect()->to(route('admin.providers.index'));
     }
 }

@@ -32,7 +32,7 @@
                             </x:slot>
 
                             <x:slot name="content">
-                                <x:dropdown-link href="{{ route('admin.companies.edit', $object) }}">
+                                <x:dropdown-link href="{{ route('admin.providers.edit', $object) }}">
                                     Edit
                                 </x:dropdown-link>
                                 <x-dropdown-link href="#" onclick="event.preventDefault();"

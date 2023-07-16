@@ -26,9 +26,9 @@ class Job extends Model
         return 'slug';
     }
 
-    public function company(): BelongsTo
+    public function provider(): BelongsTo
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Provider::class);
     }
 
     public function city(): BelongsTo

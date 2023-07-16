@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\V1\Tenders;
 use App\Http\Controllers\API\APIController;
 use App\Http\Requests\API\V1\Tenders\CreateTenderRequest;
 use App\Http\Resources\API\V1\TenderResource;
-use App\Models\Company;
+use App\Models\Provider;
 use App\Models\Tender;
 use Illuminate\Http\JsonResponse;
 
@@ -21,12 +21,12 @@ class TendersCreateController extends APIController
             return $this->respondWithError('Tender already exists');
         }
 
-        $company = Company::query()->where('name', 'LIKE', '%'.$data['company'].'%')->first();
+        $provider = Provider::query()->where('name', 'LIKE', '%'.$data['provider'].'%')->first();
 
-        unset($data['company']);
+        unset($data['provider']);
 
-        if ($company){
-            $data['company_id'] = $company->id;
+        if ($provider){
+            $data['provider_id'] = $provider->id;
         }
 
         $tender = Tender::query()->create($data);

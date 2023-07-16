@@ -7,8 +7,8 @@
         <x-form.input class="pl-10 w-full" wire:model.debounce.750="query" placeholder="Search..."/>
 
     </div>
-    <a href="{{route('admin.companies.create')}}">
-        <x:primary-button>Add Company</x:primary-button>
+    <a href="{{route('admin.providers.create')}}">
+        <x:primary-button>Add Provider</x:primary-button>
     </a>
 
 </div>

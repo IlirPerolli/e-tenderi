@@ -27,8 +27,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/tenders', TendersCreateController::class);
-Route::get('/tenders/{tender}', TendersShowController::class);
+Route::get('/tenders', TendersShowController::class);
 
 Route::post('/jobs', JobsCreateController::class);
-Route::get('/jobs/{job}', JobsShowController::class);
+Route::get('/jobs', JobsShowController::class);
 

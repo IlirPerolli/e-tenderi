@@ -17,7 +17,13 @@ class JobsCreateController extends APIController
     public function __invoke(CreateJobRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $existingJob = Job::where('name', $data['name'])->exists();
+
+        $existingJob = Job::query()
+            ->where('name', 'LIKE',  '%'.$data['name'].'%')
+            ->when(isset($data['deadline']), function ($query) use ($data) {
+                $query->where('deadline', $data['deadline']);
+            })
+            ->exists();
 
         if ($existingJob) {
             return $this->respondWithError('Job already exists');

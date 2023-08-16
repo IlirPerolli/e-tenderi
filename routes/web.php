@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Livewire\Dashboard\Index as Dashboard;
+
 use App\Http\Controllers\Livewire\Admin\Providers\Create as ProvidersCreate;
 use App\Http\Controllers\Livewire\Admin\Providers\Edit as ProvidersEdit;
 use App\Http\Controllers\Livewire\Admin\Providers\Index as ProvidersIndex;
@@ -28,13 +30,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', JobsIndex::class)->name('jobs.index');
+
+Route::get('/dashboard', Dashboard::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

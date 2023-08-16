@@ -7,24 +7,32 @@
         <x-form.input class="pl-10 w-full" wire:model.debounce.750="query" placeholder="Search..."/>
     </div>
     <div class="relative w-full sm:w-72">
-        <x:form.select id="parent_id" placeholder="Select Companies" wire:model.debounce.750="company">
-            <option value=""> Select Companies</option>
-            @foreach($companies as $company)
-                <option value="{{ $company->slug ?? ''}}">{{ $company->name ?? '' }} </option>
+        <x:form.select id="provider" placeholder="Select Providers" wire:model.debounce.750="provider">
+            <option value=""> Select Provider </option>
+        @foreach($providers as $provider)
+                <option value="{{ $provider->slug ?? ''}}">{{ $provider->name ?? '' }} </option>
             @endforeach
         </x:form.select>
     </div>
     <div class="relative w-full sm:w-72">
         <x:form.select id="city" placeholder="Select Cities" wire:model.debounce.750="city">
-            <option value=""> Select City</option>
+            <option value=""> Select City </option>
             @foreach($cities as $city)
                 <option value="{{ $city->slug ?? ''}}">{{ $city->name ?? '' }} </option>
             @endforeach
         </x:form.select>
     </div>
+    <div class="relative w-full sm:w-72">
+        <x:form.select id="category" placeholder="Select Categories" wire:model.debounce.750="category">
+            <option value=""> Select Category </option>
+            @foreach($categories as $category)
+                <option value="{{ $category->slug ?? ''}}">{{ $category->name ?? '' }} </option>
+            @endforeach
+        </x:form.select>
+    </div>
     <div class="">
         <a href="#">
-            <x:primary-button>Add tender</x:primary-button>
+            <x:primary-button>Add Tender</x:primary-button>
         </a>
     </div>
 

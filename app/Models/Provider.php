@@ -7,7 +7,7 @@ use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Provider extends Model
 {
     use HasFactory, Sluggable, Filterable;
 

@@ -1,8 +1,8 @@
 <div>
     <form wire:submit.prevent="submit()">
         <x:utils.card>
-            <x:slot name="title">Create Company</x:slot>
-            <x:slot name="subtitle">General Company Information</x:slot>
+            <x:slot name="title">Create Provider</x:slot>
+            <x:slot name="subtitle">General Provider Information</x:slot>
 
             <div class="space-y-6 sm:space-y-5">
                 <div class="space-y-6 sm:space-y-5">

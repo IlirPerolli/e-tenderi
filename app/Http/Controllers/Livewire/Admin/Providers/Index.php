@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Livewire\Admin\Companies;
+namespace App\Http\Controllers\Livewire\Admin\Providers;
 
 use App\Filters\CompanyFilter;
+use App\Filters\ProviderFilter;
 use App\Models\Company;
+use App\Models\Provider;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -22,17 +24,16 @@ class Index extends Component
         $this->resetPage();
     }
 
-
     public function render()
     {
-        $objects = Company::query()->filter(new CompanyFilter($this))->paginate(10);
-        return view('admin.companies.index', compact('objects'));
+        $objects = Provider::query()->filter(new ProviderFilter($this))->paginate(10);
+        return view('admin.providers.index', compact('objects'));
     }
 
     public function deleteItem(Company $company)
     {
         $company->delete();
 
-        notify_success("The company has been deleted.", $this);
+        notify_success("The provider has been deleted.", $this);
     }
 }

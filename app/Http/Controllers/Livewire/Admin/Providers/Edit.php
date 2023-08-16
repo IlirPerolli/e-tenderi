@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Livewire\Admin\Companies;
+namespace App\Http\Controllers\Livewire\Admin\Providers;
 
-use App\Models\Company;
+use App\Models\Provider;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
@@ -10,16 +10,16 @@ use Livewire\WithFileUploads;
 class Edit extends Component
 {
     use WithFileUploads;
-    public Company $company;
+    public Provider $provider;
 
     public $form = [];
     public $uploadedPhoto;
     public $preview_url;
 
-    public function mount(Company $slug)
+    public function mount(Provider $slug)
     {
-        $this->company = $slug;
-        $this->form = $this->company->toArray();
+        $this->provider = $slug;
+        $this->form = $this->provider->toArray();
 
         $this->preview_url = $this->form['image_path'];
     }
@@ -30,7 +30,7 @@ class Edit extends Component
 
     public function render()
     {
-        return view('admin.companies.form');
+        return view('admin.providers.form');
     }
 
     public function updatedFormResourcePath(){
@@ -58,10 +58,10 @@ class Edit extends Component
             }
         }
 
-        $this->company->update($data);
+        $this->provider->update($data);
 
-        notify_success('Company updated successfully.');
+        notify_success('Provider updated successfully.');
 
-        return redirect()->to(route('admin.companies.index'));
+        return redirect()->to(route('admin.providers.index'));
     }
 }

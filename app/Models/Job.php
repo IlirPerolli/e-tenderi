@@ -36,6 +36,11 @@ class Job extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+
     public function category(): BelongsToMany
     {
         return $this->belongsToMany(Category::class)->withTimestamps();

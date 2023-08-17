@@ -23,6 +23,14 @@
         </x:form.select>
     </div>
     <div class="relative w-full sm:w-72">
+        <x:form.select id="country" placeholder="Select Countries" wire:model.debounce.750="country">
+            <option value=""> Select Country </option>
+            @foreach($countries as $country)
+                <option value="{{ $country->slug ?? ''}}">{{ $country->name ?? '' }} </option>
+            @endforeach
+        </x:form.select>
+    </div>
+    <div class="relative w-full sm:w-72">
         <x:form.select id="category" placeholder="Select Categories" wire:model.debounce.750="category">
             <option value=""> Select Category </option>
             @foreach($categories as $category)

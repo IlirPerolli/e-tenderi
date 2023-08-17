@@ -31,9 +31,9 @@ class JobsCreateController extends APIController
 
         $provider = $this->findProviderByName($data['provider'] ?? null);
 
-        $country = $this->findCountryByName($data['country'] ?? null);
+        $country = $this->findOrCreateCountry($data['country']);
 
-        $city = $this->findOrCreateCity($data['city'] ?? null, $data['country']);
+        $city = $this->findOrCreateCity($data['city'] ?? null, $country);
 
         $category = $this->findOrCreateCategory($data['category'] ?? null);
 
@@ -64,16 +64,22 @@ class JobsCreateController extends APIController
         return Provider::where('name', 'LIKE', '%' . $providerName . '%')->first();
     }
 
-    private function findCountryByName(?string $countryName): ?Country
+    private function findOrCreateCountry(string $countryName): ?Country
     {
         if (!$countryName) {
             return null;
         }
 
-        return Country::where('name', 'LIKE', '%' . $countryName . '%')->first();
+        $country = Country::where('name', 'LIKE', '%' . $countryName . '%')->first();
+
+        if (!$country){
+            $country = Country::query()->create(['name' => $countryName]);
+        }
+
+        return $country;
     }
 
-    private function findOrCreateCity(?string $cityName, ?string $countryName)
+    private function findOrCreateCity(?string $cityName, Country $country)
     {
         if (!$cityName) {
             return null;
@@ -82,7 +88,6 @@ class JobsCreateController extends APIController
         $city = City::where('name', 'LIKE', '%' . $cityName . '%')->first();
 
         if (!$city) {
-            $country = Country::where('name', 'LIKE', '%' . $countryName . '%')->first();
             $city = City::create([
                 'name' => $cityName,
                 'country_id' => $country->id,

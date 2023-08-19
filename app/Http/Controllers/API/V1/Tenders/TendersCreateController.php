@@ -40,6 +40,7 @@ class TendersCreateController extends APIController
         $data['provider_id'] = $provider?->id;
         $data['country_id'] = $country?->id;
         $data['city_id'] = $city->id ?? null;
+        $categories = $data['categories'] ?? null;
 
         unset($data['provider']);
         unset($data['country']);
@@ -48,9 +49,7 @@ class TendersCreateController extends APIController
 
         $tender = Tender::create($data);
 
-        if ($category) {
-            $tender->category()->attach($category);
-        }
+        $this->findOrCreateCategory($categories, $tender);
 
         return $this->respondWithSuccess(new TenderResource($tender), __('app.success'), 201);
     }
@@ -97,20 +96,23 @@ class TendersCreateController extends APIController
         return $city;
     }
 
-    private function findOrCreateCategory(?string $categoryName)
+    private function findOrCreateCategory(?array $categories, $tender): void
     {
-        if (!$categoryName) {
-            return null;
+        if (!$categories){
+            return;
         }
 
-        $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->first();
+        foreach ($categories as $categoryName){
 
-        if (!$category) {
-            $category = Category::create([
-                'name' => $categoryName,
-            ]);
+            $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->first();
+
+            if (!$category) {
+                $category = Category::create([
+                    'name' => $categoryName,
+                ]);
+            }
+
+            $tender->categories()->attach($category);
         }
-
-        return $category;
     }
 }

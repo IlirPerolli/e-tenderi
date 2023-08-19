@@ -24,7 +24,8 @@ class CreateJobRequest extends FormRequest
             'provider' => ['nullable'],
             'country' => ['nullable'],
             'city' => ['nullable'],
-            'category' => ['nullable'],
+            'categories' => ['nullable', 'array'],
+            'categories.*' => ['nullable', 'max:255', 'min:2'],
             'is_remote' => ['sometimes', 'in:0,1']
         ];
     }

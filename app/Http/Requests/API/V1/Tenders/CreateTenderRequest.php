@@ -24,7 +24,8 @@ class CreateTenderRequest extends FormRequest
             'provider' => ['nullable'],
             'country' => ['required'],
             'city' => ['nullable'],
-            'category' => ['nullable']
+            'categories' => ['nullable', 'array'],
+            'categories.*' => ['nullable', 'max:255', 'min:2'],
         ];
     }
 }

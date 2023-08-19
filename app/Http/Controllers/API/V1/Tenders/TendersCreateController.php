@@ -35,8 +35,6 @@ class TendersCreateController extends APIController
 
         $city = $this->findOrCreateCity($data['city'] ?? null, $country);
 
-        $category = $this->findOrCreateCategory($data['category'] ?? null);
-
         $data['provider_id'] = $provider?->id;
         $data['country_id'] = $country?->id;
         $data['city_id'] = $city->id ?? null;
@@ -45,7 +43,7 @@ class TendersCreateController extends APIController
         unset($data['provider']);
         unset($data['country']);
         unset($data['city']);
-        unset($data['category']);
+        unset($data['categories']);
 
         $tender = Tender::create($data);
 

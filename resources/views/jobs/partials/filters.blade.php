@@ -38,6 +38,17 @@
             @endforeach
         </x:form.select>
     </div>
+
+    <div class="relative w-full sm:w-72">
+        <x:form.select id="type" placeholder="Type" wire:model.debounce.750="type">
+
+                <option value="{{''}}">All Jobs </option>
+                <option value="{{'remote'}}">Remote jobs </option>
+                <option value="{{'site'}}">On-site jobs </option>
+
+        </x:form.select>
+    </div>
+
     <div class="">
         <a href="#">
             <x:primary-button>Add job</x:primary-button>

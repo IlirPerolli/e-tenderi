@@ -22,6 +22,7 @@ class Index extends Component
     public ?string $city = null;
     public ?string $country = null;
     public ?string $category = null;
+    public ?string $type = null;
 
     public Collection $providers;
     public $cities;
@@ -37,6 +38,7 @@ class Index extends Component
         'city' => ['except' => ''],
         'country' => ['except' => ''],
         'category' => ['except' => ''],
+        'type' => ['except' => ''],
     ];
 
     public function updating()
@@ -56,8 +58,10 @@ class Index extends Component
     {
         $jobs = Job::query()->filter(new JobFilter($this))->with('provider')->whereDate('deadline', '>', Carbon::now())->latest()->paginate(24);
 
-        if ($this->country == 'remote'){
-            $this->cities = [];
+        $countryId = Country::query()->where('slug', $this->country)->first()->id ?? null;
+
+        if ($countryId) {
+            $this->cities = City::query()->where('country_id', $countryId)->get();
         }
         else{
             $this->cities = $this->allCities;

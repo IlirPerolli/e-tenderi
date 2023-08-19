@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('deadline')->nullable();
             $table->string('url');
             $table->string('price')->nullable();
+            $table->boolean('is_remote')->default(false);
             $table->json('props')->nullable();
             $table->timestamps();
         });

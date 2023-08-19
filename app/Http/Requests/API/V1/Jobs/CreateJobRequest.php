@@ -19,12 +19,14 @@ class CreateJobRequest extends FormRequest
             'image_path' => ['nullable', 'min:2', 'max:5000'],
             'deadline' => ['nullable', 'date'],
             'url' => ['required', 'url', 'min:2', 'max:1000'],
-            'price' => ['nullable', 'float', 'min:2', 'max:255'],
+            'price' => ['nullable', 'string', 'min:2', 'max:255'],
             'props' => ['nullable'],
             'provider' => ['nullable'],
-            'country' => ['required'],
+            'country' => ['nullable'],
             'city' => ['nullable'],
-            'category' => ['nullable']
+            'categories' => ['nullable', 'array'],
+            'categories.*' => ['nullable', 'max:255', 'min:2'],
+            'is_remote' => ['sometimes', 'in:0,1']
         ];
     }
 }

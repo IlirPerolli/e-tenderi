@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('image_path')->nullable();
             $table->date('deadline')->nullable();
             $table->string('url');
-            $table->float('price')->nullable();
+            $table->string('price')->nullable();
+            $table->boolean('is_remote')->default(false);
             $table->json('props')->nullable();
             $table->timestamps();
         });

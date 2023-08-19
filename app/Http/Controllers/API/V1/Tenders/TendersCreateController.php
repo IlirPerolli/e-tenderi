@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\V1\Tenders;
 
 use App\Http\Controllers\API\APIController;
 use App\Http\Requests\API\V1\Tenders\CreateTenderRequest;
-use App\Http\Resources\API\V1\JobResource;
 use App\Http\Resources\API\V1\TenderResource;
 use App\Models\Category;
 use App\Models\City;
@@ -32,26 +31,23 @@ class TendersCreateController extends APIController
 
         $provider = $this->findProviderByName($data['provider'] ?? null);
 
-        $country = $this->findCountryByName($data['country'] ?? null);
+        $country = $this->findOrCreateCountry($data['country']);
 
-        $city = $this->findOrCreateCity($data['city'] ?? null, $data['country']);
-
-        $category = $this->findOrCreateCategory($data['category'] ?? null);
+        $city = $this->findOrCreateCity($data['city'] ?? null, $country);
 
         $data['provider_id'] = $provider?->id;
         $data['country_id'] = $country?->id;
         $data['city_id'] = $city->id ?? null;
+        $categories = $data['categories'] ?? null;
 
         unset($data['provider']);
         unset($data['country']);
         unset($data['city']);
-        unset($data['category']);
+        unset($data['categories']);
 
         $tender = Tender::create($data);
 
-        if ($category) {
-            $tender->category()->attach($category);
-        }
+        $this->findOrCreateCategory($categories, $tender);
 
         return $this->respondWithSuccess(new TenderResource($tender), __('app.success'), 201);
     }
@@ -65,16 +61,22 @@ class TendersCreateController extends APIController
         return Provider::where('name', 'LIKE', '%' . $providerName . '%')->first();
     }
 
-    private function findCountryByName(?string $countryName): ?Country
+    private function findOrCreateCountry(string $countryName): ?Country
     {
         if (!$countryName) {
             return null;
         }
 
-        return Country::where('name', 'LIKE', '%' . $countryName . '%')->first();
+        $country = Country::where('name', 'LIKE', '%' . $countryName . '%')->first();
+
+        if (!$country){
+            $country = Country::query()->create(['name' => $countryName]);
+        }
+
+        return $country;
     }
 
-    private function findOrCreateCity(?string $cityName, ?string $countryName)
+    private function findOrCreateCity(?string $cityName, Country $country)
     {
         if (!$cityName) {
             return null;
@@ -83,7 +85,6 @@ class TendersCreateController extends APIController
         $city = City::where('name', 'LIKE', '%' . $cityName . '%')->first();
 
         if (!$city) {
-            $country = Country::where('name', 'LIKE', '%' . $countryName . '%')->first();
             $city = City::create([
                 'name' => $cityName,
                 'country_id' => $country->id,
@@ -93,20 +94,23 @@ class TendersCreateController extends APIController
         return $city;
     }
 
-    private function findOrCreateCategory(?string $categoryName)
+    private function findOrCreateCategory(?array $categories, $tender): void
     {
-        if (!$categoryName) {
-            return null;
+        if (!$categories){
+            return;
         }
 
-        $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->first();
+        foreach ($categories as $categoryName){
 
-        if (!$category) {
-            $category = Category::create([
-                'name' => $categoryName,
-            ]);
+            $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->first();
+
+            if (!$category) {
+                $category = Category::create([
+                    'name' => $categoryName,
+                ]);
+            }
+
+            $tender->categories()->attach($category);
         }
-
-        return $category;
     }
 }

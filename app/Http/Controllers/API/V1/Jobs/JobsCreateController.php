@@ -31,26 +31,22 @@ class JobsCreateController extends APIController
 
         $provider = $this->findProviderByName($data['provider'] ?? null);
 
-        $country = $this->findCountryByName($data['country'] ?? null);
+        $country = $this->findOrCreateCountry($data['country'] ?? null);
 
-        $city = $this->findOrCreateCity($data['city'] ?? null, $data['country']);
-
-        $category = $this->findOrCreateCategory($data['category'] ?? null);
+        $city = $this->findOrCreateCity($data['city'] ?? null, $country);
 
         $data['provider_id'] = $provider?->id;
         $data['country_id'] = $country?->id;
         $data['city_id'] = $city->id ?? null;
-
+        $categories = $data['categories'] ?? null;
         unset($data['provider']);
         unset($data['country']);
         unset($data['city']);
-        unset($data['category']);
+        unset($data['categories']);
 
         $job = Job::create($data);
 
-        if ($category){
-            $job->category()->attach($category);
-        }
+        $this->findOrCreateCategory($categories, $job);
 
         return $this->respondWithSuccess(new JobResource($job), __('app.success'), 201);
     }
@@ -64,25 +60,30 @@ class JobsCreateController extends APIController
         return Provider::where('name', 'LIKE', '%' . $providerName . '%')->first();
     }
 
-    private function findCountryByName(?string $countryName): ?Country
+    private function findOrCreateCountry(?string $countryName): ?Country
     {
         if (!$countryName) {
             return null;
         }
 
-        return Country::where('name', 'LIKE', '%' . $countryName . '%')->first();
+        $country = Country::where('name', 'LIKE', '%' . $countryName . '%')->first();
+
+        if (!$country){
+            $country = Country::query()->create(['name' => $countryName]);
+        }
+
+        return $country;
     }
 
-    private function findOrCreateCity(?string $cityName, ?string $countryName)
+    private function findOrCreateCity(?string $cityName, ?Country $country)
     {
-        if (!$cityName) {
+        if (!$cityName || !$country) {
             return null;
         }
 
         $city = City::where('name', 'LIKE', '%' . $cityName . '%')->first();
 
         if (!$city) {
-            $country = Country::where('name', 'LIKE', '%' . $countryName . '%')->first();
             $city = City::create([
                 'name' => $cityName,
                 'country_id' => $country->id,
@@ -92,20 +93,23 @@ class JobsCreateController extends APIController
         return $city;
     }
 
-    private function findOrCreateCategory(?string $categoryName)
+    private function findOrCreateCategory(?array $categories, $job): void
     {
-        if (!$categoryName){
-            return null;
+        if (!$categories){
+            return;
         }
 
-        $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->first();
+        foreach ($categories as $categoryName){
 
-        if (!$category) {
-            $category = Category::create([
-                'name' => $categoryName,
-            ]);
+            $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->first();
+
+            if (!$category) {
+                $category = Category::create([
+                    'name' => $categoryName,
+                ]);
+            }
+
+            $job->categories()->attach($category);
         }
-
-        return $category;
     }
 }

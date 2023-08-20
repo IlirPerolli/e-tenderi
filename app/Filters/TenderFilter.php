@@ -28,7 +28,7 @@ class TenderFilter extends Filter
 
     public function category($value)
     {
-        $this->builder->whereHas('category', function ($query) use ($value){
+        $this->builder->whereHas('categories', function ($query) use ($value){
             $query->where('slug', $value);
         });
     }

@@ -30,9 +30,9 @@ class Index extends Component
         return view('admin.providers.index', compact('objects'));
     }
 
-    public function deleteItem(Company $company)
+    public function deleteItem(Provider $provider)
     {
-        $company->delete();
+        $provider->delete();
 
         notify_success("The provider has been deleted.", $this);
     }

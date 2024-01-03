@@ -60,6 +60,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/test', function(){
-   echo "testd";
+   echo "test";
 });
 require __DIR__.'/auth.php';

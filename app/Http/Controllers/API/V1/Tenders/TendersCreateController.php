@@ -101,9 +101,10 @@ class TendersCreateController extends APIController
         }
 
         foreach ($categories as $categoryName){
-
+            if (!$categoryName){
+                continue;
+            }
             $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->first();
-
             if (!$category) {
                 $category = Category::create([
                     'name' => $categoryName,

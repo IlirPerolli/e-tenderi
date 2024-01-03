@@ -100,6 +100,9 @@ class JobsCreateController extends APIController
         }
 
         foreach ($categories as $categoryName){
+            if (!$categoryName){
+                continue;
+            }
 
             $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->first();
 

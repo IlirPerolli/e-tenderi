@@ -1,0 +1,34 @@
+name: Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ''
+          script: |
+            sudo -s || echo 'Missing permissions'
+            cd /var/www/html/
+            sudo php artisan down
+            sudo git reset --hard
+            git clean -df
+            sudo git checkout .
+            sudo git pull origin main
+            sudo composer install --no-interaction --prefer-dist --optimize-autoloader
+            php artisan migrate --force
+            sudo php artisan optimize
+            sudo rm package-lock.json
+            npm install
+            npm run build
+            sudo php artisan up

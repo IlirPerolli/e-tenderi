@@ -59,7 +59,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/cities/{slug}/edit', CitiesEdit::class)->name('admin.cities.edit');
 });
 
-Route::get('/test', function(){
-   echo "test";
-});
 require __DIR__.'/auth.php';

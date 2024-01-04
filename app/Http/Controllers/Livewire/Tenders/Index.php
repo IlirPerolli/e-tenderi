@@ -48,7 +48,7 @@ class Index extends Component
 
     public function render()
     {
-        $tenders = Tender::query()->filter(new TenderFilter($this))->with('provider')->latest()->paginate(24);
+        $tenders = Tender::query()->filter(new TenderFilter($this))->with('provider')->latest()->paginate(50);
         $providers = Provider::query()->get();
         $cities = City::query()->get();
         $categories = Category::query()->get();

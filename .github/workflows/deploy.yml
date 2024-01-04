@@ -30,6 +30,6 @@ jobs:
             php artisan migrate --force
             sudo php artisan optimize
             sudo rm package-lock.json
-            npm install
-            npm run build
+            yarn
+            yarn build
             sudo php artisan up

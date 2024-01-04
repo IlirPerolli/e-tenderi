@@ -61,4 +61,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/tenders', TendersIndex::class)->name('tenders.index');
 Route::get('/jobs', JobsIndex::class)->name('jobs.index');
 
+Route::get('/test', function (){
+   echo 'adsf';
+});
 require __DIR__.'/auth.php';

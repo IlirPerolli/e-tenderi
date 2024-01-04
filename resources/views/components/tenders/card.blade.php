@@ -12,9 +12,14 @@
                 <h3 class="text-lg font-semibold truncate dark:text-white">{{ $item->name }}</h3>
                 <p class="text-sm text-gray-600">{{ $item->description }}</p>
                 <div class="flex flex-wrap items-center gap-2 mt-2">
-                    <span class="text-sm bg-blue-100 dark:bg-gray-600 text-blue-800 dark:text-gray-200 px-3 py-1 rounded-full">{{ $item?->city?->name ?? ''}}</span>
-                    <span class="text-sm bg-gray-100 dark:bg-gray-600 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">{{ $item->deadline }}</span>
-                    <span class="text-sm bg-gray-100 dark:bg-gray-600 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">{{ $item->provider->name }}</span>
+                    @if($item->city)
+                        <span
+                            class="text-sm bg-blue-100 dark:bg-gray-600 text-blue-800 dark:text-gray-200 px-3 py-1 rounded-full">{{ $item?->city?->name ?? ''}}</span>
+                    @endif
+                    <span
+                        class="text-sm bg-gray-100 dark:bg-gray-600 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">{{ $item?->deadline?->format('d.M.Y') ?? 'No Deadline' }}</span>
+                    <span
+                        class="text-sm bg-gray-100 dark:bg-gray-600 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full">{{ $item->provider->name }}</span>
                 </div>
             </div>
         </div>

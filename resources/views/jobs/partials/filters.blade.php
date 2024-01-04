@@ -49,11 +49,11 @@
         </x:form.select>
     </div>
 
-    <div class="">
-        <a href="#">
-            <x:primary-button>Add job</x:primary-button>
-        </a>
-    </div>
+{{--    <div class="">--}}
+{{--        <a href="#">--}}
+{{--            <x:primary-button>Add job</x:primary-button>--}}
+{{--        </a>--}}
+{{--    </div>--}}
 
 
 </div>

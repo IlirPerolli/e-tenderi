@@ -15,6 +15,7 @@ class Job extends Model
 
     protected $casts = [
         'props' => 'json',
+        'deadline' => 'date',
     ];
 
     protected $guarded = [];

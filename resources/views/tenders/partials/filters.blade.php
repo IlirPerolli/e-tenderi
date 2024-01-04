@@ -30,7 +30,7 @@
             @endforeach
         </x:form.select>
     </div>
-    
+
 {{--    <div class="">--}}
 {{--        <a href="#">--}}
 {{--            <x:primary-button>Add Tender</x:primary-button>--}}

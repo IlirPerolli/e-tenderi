@@ -9,7 +9,7 @@
                      class="w-full h-full object-cover rounded-full">
             </div>
             <div class="flex-grow">
-                <h3 class="text-lg font-semibold truncate dark:text-white">{{ $item->name }}</h3>
+                <h3 class="text-lg font-semibold truncate dark:text-white">{{ Str::limit($item->name, 50) }}</h3>
                 <p class="text-sm text-gray-600">{{ $item->description }}</p>
                 <div class="flex flex-wrap items-center gap-2 mt-2">
                     @if($item->city)

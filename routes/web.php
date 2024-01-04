@@ -34,7 +34,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('/', JobsIndex::class)->name('jobs.index');
+Route::get('/', JobsIndex::class)->name('jobs.index');
 
 Route::get('/dashboard', Dashboard::class)->name('dashboard');
 //Route::get('/dashboard', Dashboard::class)->middleware(['auth', 'verified'])->name('dashboard');

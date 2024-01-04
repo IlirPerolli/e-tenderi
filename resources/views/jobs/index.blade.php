@@ -1,7 +1,7 @@
 <div>
     @include('jobs.partials.filters')
 
-    <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:gap-4">
+    <div class="grid gap-3 grid-cols-1">
         @forelse($jobs as $job)
             <x:tenders.card :item="$job"/>
         @empty

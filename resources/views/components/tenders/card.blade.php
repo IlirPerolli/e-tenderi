@@ -4,8 +4,9 @@
     <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:bg-gray-50 dark:hover:bg-gray-700 dark:bg-gray-800">
         <div class="p-4 flex">
             <div class="w-16 h-16 mr-4 flex-shrink-0">
-                <img
-                     src="{{$item->image_path ?? $item?->provider?->image_path ?? default_404_image()}}" alt="Company Logo"
+
+                <img onerror="this.src = '{{ default_404_image() }}'"
+                     src="{{$item->image_path ?? resourceUrl($item?->provider?->image_path)}}" alt="Company Logo"
                      class="w-full h-full object-cover rounded-full">
             </div>
             <div class="flex-grow">

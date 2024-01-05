@@ -25,17 +25,19 @@
                     <x-nav-link :href="route('jobs.index')" :active="request()->routeIs('jobs.*')">
                         {{ __('Jobs') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.providers.index')"
-                                :active="request()->routeIs('admin.providers.*')">
-                        {{ __('Providers') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.countries.index')"
-                                :active="request()->routeIs('admin.countries.*')">
-                        {{ __('Countries') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.cities.index')" :active="request()->routeIs('admin.cities.*')">
-                        {{ __('Cities') }}
-                    </x-nav-link>
+                    @if (user() && user()->hasRole(\App\Enums\UserRoleEnum::ADMIN))
+                        <x-nav-link :href="route('admin.providers.index')"
+                                    :active="request()->routeIs('admin.providers.*')">
+                            {{ __('Providers') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.countries.index')"
+                                    :active="request()->routeIs('admin.countries.*')">
+                            {{ __('Countries') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.cities.index')" :active="request()->routeIs('admin.cities.*')">
+                            {{ __('Cities') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -114,17 +116,20 @@
             <x-responsive-nav-link :href="route('jobs.index')" :active="request()->routeIs('jobs.*')">
                 {{ __('Jobs') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.providers.index')"
-                                   :active="request()->routeIs('admin.providers.*')">
-                {{ __('Providers') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.countries.index')"
-                                   :active="request()->routeIs('admin.countries.*')">
-                {{ __('Countries') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.cities.index')" :active="request()->routeIs('admin.cities.*')">
-                {{ __('Cities') }}
-            </x-responsive-nav-link>
+            @if (user() && user()->hasRole(\App\Enums\UserRoleEnum::ADMIN))
+                <x-responsive-nav-link :href="route('admin.providers.index')"
+                                       :active="request()->routeIs('admin.providers.*')">
+                    {{ __('Providers') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.countries.index')"
+                                       :active="request()->routeIs('admin.countries.*')">
+                    {{ __('Countries') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.cities.index')"
+                                       :active="request()->routeIs('admin.cities.*')">
+                    {{ __('Cities') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

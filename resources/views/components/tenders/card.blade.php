@@ -4,7 +4,7 @@
     <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:bg-gray-50 dark:hover:bg-gray-700 dark:bg-gray-800">
         <div class="p-4 flex">
             <div class="w-16 h-16 mr-4 flex-shrink-0">
-                @dump($item?->provider)
+                @dump($item?->provider?->image_path)
                 <img onerror="this.src = '{{ default_404_image() }}'"
                      src="{{$item->image_path ?? $item?->provider?->image_path}}" alt="Company Logo"
                      class="w-full h-full object-cover rounded-full">

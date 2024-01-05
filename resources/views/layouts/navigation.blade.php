@@ -22,7 +22,7 @@
                     <x-nav-link :href="route('tenders.index')" :active="request()->routeIs('tenders.*')">
                         {{ __('Tenders') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('jobs.index')" :active="request()->routeIs('jobs.*')">
+                    <x-nav-link :href="route('jobs.index')" :active="request()->routeIs('jobs.*') || request()->routeIs('index')">
                         {{ __('Jobs') }}
                     </x-nav-link>
                     @if (user() && user()->hasRole(\App\Enums\UserRoleEnum::ADMIN))

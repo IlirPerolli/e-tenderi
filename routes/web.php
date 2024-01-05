@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
-Route::get('/', JobsIndex::class);
+Route::get('/', JobsIndex::class)->name('index');
 
 Route::get('/dashboard', Dashboard::class)->name('dashboard');
 //Route::get('/dashboard', Dashboard::class)->middleware(['auth', 'verified'])->name('dashboard');

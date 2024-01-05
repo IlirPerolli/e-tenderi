@@ -20,7 +20,7 @@ class Index extends Component
     public ?string $query = '';
     public ?string $provider = null;
     public ?string $city = null;
-    public ?string $country = null;
+    public ?string $country = 'Kosovo';
     public ?string $category = null;
     public ?string $type = null;
 

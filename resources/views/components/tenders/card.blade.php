@@ -5,7 +5,7 @@
         <div class="p-4 flex">
             <div class="w-16 h-16 mr-4 flex-shrink-0">
                 <img onerror="this.src = '{{ default_404_image() }}'"
-                     src="{{$item->image_path ?? $item?->provider?->image_path}}" alt="Company Logo"
+                     src="{{$item?->provider?->image_path}}" alt="Company Logo"
                      class="w-full h-full object-cover rounded-full">
             </div>
             <div class="flex-grow">

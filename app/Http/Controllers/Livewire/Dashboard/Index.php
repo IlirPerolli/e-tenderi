@@ -29,6 +29,11 @@ class Index extends Component
     {
         $this->jobsTotal = Job::query()->whereDate('deadline', '>', Carbon::now())->count() ?? 0;
 
+        $germanListingJobs = Job::query()->whereHas('provider', function ($query){
+            $query->where('name', 'LIKE', '%ArbeitsAgentur%');
+        })->count() ?? 0;
+        $this->jobsTotal += $germanListingJobs;
+
         $updatedAt = Job::query()->latest('id')->value('updated_at');
 
         if ($updatedAt) {

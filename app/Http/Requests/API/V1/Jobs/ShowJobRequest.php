@@ -17,6 +17,7 @@ class ShowJobRequest extends FormRequest
             'name' => ['required', 'min:2', 'max:5000'],
             'description' => ['nullable', 'min:2', 'max:5000'],
             'deadline' => ['nullable', 'date'],
+            'url' => ['nullable', 'url'],
         ];
     }
 }

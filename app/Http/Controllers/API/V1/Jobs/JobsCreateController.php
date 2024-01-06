@@ -18,16 +18,19 @@ class JobsCreateController extends APIController
     {
         $data = $request->validated();
 
-        $existingJob = Job::query()
-            ->where('name', 'LIKE',  '%'.$data['name'].'%')
-            ->when(isset($data['deadline']), function ($query) use ($data) {
-                $query->where('deadline', $data['deadline']);
-            })
-            ->exists();
-
-        if ($existingJob) {
-            return $this->respondWithError('Job already exists');
-        }
+//        $existingJob = Job::query()
+//            ->where('name', 'LIKE',  '%'.$data['name'].'%')
+//            ->when(isset($data['deadline']), function ($query) use ($data) {
+//                $query->where('deadline', $data['deadline']);
+//            })
+//            ->when(isset($data['url']), function ($query) use ($data) {
+//                $query->where('url', $data['url']);
+//            })
+//            ->exists();
+//
+//        if ($existingJob) {
+//            return $this->respondWithError('Job already exists');
+//        }
 
         $provider = $this->findProviderByName($data['provider'] ?? null);
 

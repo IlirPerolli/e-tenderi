@@ -57,7 +57,7 @@ class Index extends Component
     public function render()
     {
         $jobs = Job::query()->filter(new JobFilter($this))->with('provider', 'categories', 'country', 'city', 'provider')
-            ->when($this->country == 'Kosovo', function ($query) {
+            ->when($this->country == 'kosovo', function ($query) {
                 $query->whereDate('deadline', '>', Carbon::now());
             })
             ->latest()->paginate(50);

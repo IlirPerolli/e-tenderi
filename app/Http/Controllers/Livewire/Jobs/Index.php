@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Livewire\Jobs;
 
+use App\Enums\ListingTypeEnum;
 use App\Filters\JobFilter;
 use App\Models\Category;
 use App\Models\City;
@@ -25,10 +26,14 @@ class Index extends Component
     public ?string $type = null;
 
     public Collection $providers;
+
     public $cities;
     public $allCities;
+
+    public $categories;
+    public $allCategories;
+
     public Collection $countries;
-    public Collection $categories;
 
 
     protected $queryString = [
@@ -51,7 +56,7 @@ class Index extends Component
         $this->providers = Provider::query()->get();
         $this->allCities = City::query()->get();
         $this->countries = Country::query()->get();
-        $this->categories = Category::query()->get();
+        $this->allCategories = Category::query()->where('type', ListingTypeEnum::JOB->value)->get();
     }
 
     public function render()
@@ -66,8 +71,13 @@ class Index extends Component
 
         if ($countryId) {
             $this->cities = City::query()->where('country_id', $countryId)->get();
+            $this->categories = Category::query()
+                ->where('country_id', $countryId)
+                ->where('type', ListingTypeEnum::JOB->value)
+                ->get();
         } else {
             $this->cities = $this->allCities;
+            $this->categories = $this->allCategories;
         }
 
         return view('jobs.index', compact('jobs'));

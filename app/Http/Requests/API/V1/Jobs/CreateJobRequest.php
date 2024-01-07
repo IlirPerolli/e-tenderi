@@ -22,7 +22,7 @@ class CreateJobRequest extends FormRequest
             'price' => ['nullable', 'string', 'min:2', 'max:255'],
             'props' => ['nullable'],
             'provider' => ['nullable'],
-            'country' => ['nullable'],
+            'country' => ['required'],
             'city' => ['nullable'],
             'categories' => ['nullable', 'array'],
             'categories.*' => ['nullable', 'max:255', 'min:2'],

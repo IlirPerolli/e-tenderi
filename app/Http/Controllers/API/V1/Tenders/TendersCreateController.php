@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Tenders;
 
+use App\Enums\ListingTypeEnum;
 use App\Http\Controllers\API\APIController;
 use App\Http\Requests\API\V1\Tenders\CreateTenderRequest;
 use App\Http\Resources\API\V1\TenderResource;
@@ -45,9 +46,9 @@ class TendersCreateController extends APIController
         unset($data['city']);
         unset($data['categories']);
 
-        $tender = Tender::create($data);
+        $tender = Tender::query()->create($data);
 
-        $this->findOrCreateCategory($categories, $tender);
+        $this->findOrCreateCategory($categories, $tender, $country);
 
         return $this->respondWithSuccess(new TenderResource($tender), __('app.success'), 201);
     }
@@ -69,7 +70,7 @@ class TendersCreateController extends APIController
 
         $country = Country::where('name', 'LIKE', '%' . $countryName . '%')->first();
 
-        if (!$country){
+        if (!$country) {
             $country = Country::query()->create(['name' => $countryName]);
         }
 
@@ -82,10 +83,10 @@ class TendersCreateController extends APIController
             return null;
         }
 
-        $city = City::where('name', 'LIKE', '%' . $cityName . '%')->first();
+        $city = City::query()->where('name', 'LIKE', '%' . $cityName . '%')->first();
 
         if (!$city) {
-            $city = City::create([
+            $city = City::query()->create([
                 'name' => $cityName,
                 'country_id' => $country->id,
             ]);
@@ -94,20 +95,28 @@ class TendersCreateController extends APIController
         return $city;
     }
 
-    private function findOrCreateCategory(?array $categories, $tender): void
+    private function findOrCreateCategory(?array $categories, $tender, $country = null): void
     {
-        if (!$categories){
+        if (!$categories) {
             return;
         }
 
-        foreach ($categories as $categoryName){
-            if (!$categoryName){
+        foreach ($categories as $categoryName) {
+            if (!$categoryName) {
                 continue;
             }
-            $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->first();
+
+            $category = Category::query()
+                ->where('name', 'LIKE', '%' . $categoryName . '%')
+                ->when($country, function ($query) use ($country) {
+                    $query->where('country_id', $country?->id);
+                })->first();
+
             if (!$category) {
-                $category = Category::create([
+                $category = Category::query()->create([
                     'name' => $categoryName,
+                    'country_id' => $country?->id,
+                    'type' => ListingTypeEnum::TENDER->value
                 ]);
             }
 

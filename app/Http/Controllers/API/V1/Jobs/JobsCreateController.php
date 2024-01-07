@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Jobs;
 
+use App\Enums\ListingTypeEnum;
 use App\Http\Controllers\API\APIController;
 use App\Http\Requests\API\V1\Jobs\CreateJobRequest;
 use App\Http\Resources\API\V1\JobResource;
@@ -47,9 +48,9 @@ class JobsCreateController extends APIController
         unset($data['city']);
         unset($data['categories']);
 
-        $job = Job::create($data);
+        $job = Job::query()->create($data);
 
-        $this->findOrCreateCategory($categories, $job);
+        $this->findOrCreateCategory($categories, $job, $country);
 
         return $this->respondWithSuccess(new JobResource($job), __('app.success'), 201);
     }
@@ -71,7 +72,7 @@ class JobsCreateController extends APIController
 
         $country = Country::where('name', 'LIKE', '%' . $countryName . '%')->first();
 
-        if (!$country){
+        if (!$country) {
             $country = Country::query()->create(['name' => $countryName]);
         }
 
@@ -84,10 +85,10 @@ class JobsCreateController extends APIController
             return null;
         }
 
-        $city = City::where('name', 'LIKE', '%' . $cityName . '%')->first();
+        $city = City::query()->where('name', 'LIKE', '%' . $cityName . '%')->first();
 
         if (!$city) {
-            $city = City::create([
+            $city = City::query()->create([
                 'name' => $cityName,
                 'country_id' => $country->id,
             ]);
@@ -96,22 +97,28 @@ class JobsCreateController extends APIController
         return $city;
     }
 
-    private function findOrCreateCategory(?array $categories, $job): void
+    private function findOrCreateCategory(?array $categories, $job, $country = null): void
     {
-        if (!$categories){
+        if (!$categories) {
             return;
         }
 
-        foreach ($categories as $categoryName){
-            if (!$categoryName){
+        foreach ($categories as $categoryName) {
+            if (!$categoryName) {
                 continue;
             }
 
-            $category = Category::where('name', 'LIKE', '%' . $categoryName . '%')->first();
+            $category = Category::query()
+                ->where('name', 'LIKE', '%' . $categoryName . '%')
+                ->when($country, function ($query) use ($country) {
+                    $query->where('country_id', $country?->id);
+                })->first();
 
             if (!$category) {
-                $category = Category::create([
+                $category = Category::query()->create([
                     'name' => $categoryName,
+                    'country_id' => $country?->id,
+                    'type' => ListingTypeEnum::JOB->value
                 ]);
             }
 

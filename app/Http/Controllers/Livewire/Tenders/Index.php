@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Livewire\Tenders;
 
+use App\Enums\ListingTypeEnum;
 use App\Filters\TenderFilter;
 use App\Models\Category;
 use App\Models\City;
-use App\Models\Country;
 use App\Models\Provider;
 use App\Models\Tender;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,6 +15,7 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithPagination;
+
     public ?string $query = '';
     public ?string $provider = null;
     public ?string $city = null;
@@ -42,18 +43,15 @@ class Index extends Component
     public function mount()
     {
         $this->providers = Provider::query()->get();
-        $this->cities = City::query()->get();
-        $this->categories = Category::query()->get();
+        $this->cities = City::query()->whereHas('country', fn($query) => $query->where('name', 'LIKE', '%kosovo%'))->get();
+        $this->categories = Category::query()->where('type', ListingTypeEnum::TENDER->value)->get();
     }
 
     public function render()
     {
         $tenders = Tender::query()->filter(new TenderFilter($this))->with('provider')->latest()->paginate(50);
-        $providers = Provider::query()->get();
-        $cities = City::query()->get();
-        $categories = Category::query()->get();
 
-        return view('tenders.index', compact('tenders', 'providers', 'cities', 'categories'));
+        return view('tenders.index', compact('tenders'));
     }
 
     public function deleteItem(Tender $tender)

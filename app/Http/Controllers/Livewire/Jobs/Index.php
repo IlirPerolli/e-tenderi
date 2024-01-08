@@ -51,6 +51,11 @@ class Index extends Component
         $this->resetPage();
     }
 
+    public function updatedCountry(): void
+    {
+        $this->city = null;
+    }
+
     public function mount()
     {
         $this->providers = Provider::query()->get();
